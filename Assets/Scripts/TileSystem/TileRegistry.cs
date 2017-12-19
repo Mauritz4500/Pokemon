@@ -9,7 +9,7 @@ public static class TileRegistry {
 	public static void Initialize()
 	{
 		if (initialized)
-			throw new System.Exception("TileRegistry has been initialized already.");
+			Debug.Log("TileRegistry has been initialized already.");
 		else
 			initialized = true;
 		Tiles = new Tile[1];

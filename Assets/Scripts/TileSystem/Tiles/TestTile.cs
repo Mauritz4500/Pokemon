@@ -17,6 +17,6 @@ public class TestTile : Tile
 
 	public Vector2i TextureCoordinates(Vector2i position, Layer layer, World world)
 	{
-		return new Vector2i(1, 1);
+		return new Vector2i(position.x / 2 % 5, position.y / 2 % 4);
 	}
 }

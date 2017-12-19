@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class LayerBehaviour : MonoBehaviour
 {
 	public Layer Layer { get; set; }
@@ -13,8 +14,11 @@ public class LayerBehaviour : MonoBehaviour
 	{
 		meshFilter = GetComponent<MeshFilter>();
 		Layer = new Layer(new Vector2i(100, 100)); //Test code
+		TextureScale = 0.25F; //Test code
 		InitalizeMesh();
+		Render();
 	}
+
 	int i = 0;
 	void Update()
 	{
@@ -35,14 +39,14 @@ public class LayerBehaviour : MonoBehaviour
 		{
 			for (int y = 0; y < sizeY; y++)
 			{
-				vertices[(x + sizeX * y) * 4] = new Vector3(x, y, 0);
-				vertices[(x + sizeX * y) * 4 + 1] = new Vector3(x + 1, y, 0);
-				vertices[(x + sizeX * y) * 4 + 2] = new Vector3(x, y + 1, 0);
-				vertices[(x + sizeX * y) * 4 + 3] = new Vector3(x + 1, y + 1, 0);
+				vertices[(x + sizeX * y) * 4] = new Vector3(x, 0, y);
+				vertices[(x + sizeX * y) * 4 + 1] = new Vector3(x + 1, 0, y);
+				vertices[(x + sizeX * y) * 4 + 2] = new Vector3(x, 0, y + 1);
+				vertices[(x + sizeX * y) * 4 + 3] = new Vector3(x + 1, 0, y + 1);
 				indices[(x + sizeX * y) * 4] = (x + sizeX * y) * 4;
-				indices[(x + sizeX * y) * 4 + 1] = (x + sizeX * y) * 4 + 1;
+				indices[(x + sizeX * y) * 4 + 1] = (x + sizeX * y) * 4 + 2;
 				indices[(x + sizeX * y) * 4 + 2] = (x + sizeX * y) * 4 + 3;
-				indices[(x + sizeX * y) * 4 + 3] = (x + sizeX * y) * 4 + 2;
+				indices[(x + sizeX * y) * 4 + 3] = (x + sizeX * y) * 4 + 1;
 			}
 		}
 		Mesh mesh = new Mesh();
@@ -50,7 +54,10 @@ public class LayerBehaviour : MonoBehaviour
 		mesh.SetIndices(indices, MeshTopology.Quads, 0);
 		mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
-		meshFilter.mesh = mesh;
+		if (/*Application.isEditor && */!Application.isPlaying)
+			meshFilter.sharedMesh = mesh;
+		else
+			meshFilter.mesh = mesh;
 	}
 
 	void Render()
@@ -61,14 +68,20 @@ public class LayerBehaviour : MonoBehaviour
 		{
 			for (int y = 0; y < sizeY; y++)
 			{
-				Vector2i position = new Vector2i(x, y);
-				Vector2 tileTextureCoordinates = Layer.Tiles[x, y].TextureCoordinates(position, Layer, World) * TextureScale;
-				textureCoordinates[(x + sizeX * y) * 4] = tileTextureCoordinates;
-				textureCoordinates[(x + sizeX * y) * 4 + 1] = tileTextureCoordinates + Vector2.right * TextureScale;
-				textureCoordinates[(x + sizeX * y) * 4 + 2] = tileTextureCoordinates + Vector2.up * TextureScale;
-				textureCoordinates[(x + sizeX * y) * 4 + 3] = tileTextureCoordinates + Vector2.one * TextureScale;
+				if (Layer.Tiles[x, y] != null)
+				{
+					Vector2i position = new Vector2i(x, y);
+					Vector2 tileTextureCoordinates = (Vector2)Layer.Tiles[x, y].TextureCoordinates(position, Layer, World) * TextureScale;
+					textureCoordinates[(x + sizeX * y) * 4] = tileTextureCoordinates;
+					textureCoordinates[(x + sizeX * y) * 4 + 1] = tileTextureCoordinates + Vector2.right * TextureScale;
+					textureCoordinates[(x + sizeX * y) * 4 + 2] = tileTextureCoordinates + Vector2.up * TextureScale;
+					textureCoordinates[(x + sizeX * y) * 4 + 3] = tileTextureCoordinates + Vector2.one * TextureScale;
+				}
 			}
 		}
-		meshFilter.mesh.uv = textureCoordinates;
+		if (/*Application.isEditor && */!Application.isPlaying)
+			meshFilter.sharedMesh.uv = textureCoordinates;
+		else
+			meshFilter.mesh.uv = textureCoordinates;
 	}
 }
