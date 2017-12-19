@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class Layer
 {
-	Tile[,] tiles;
+	public Tile[,] Tiles { get; set; }
 	Vector2i size;
 	public Vector2i Size { get { return size; } }
 
 	public Layer(Vector2i size)
 	{
-		tiles = new Tile[size.x, size.y];
+		Tiles = new Tile[size.x, size.y];
+		this.size = size;
+		//<Test code>
+		for (int x = 0; x < size.x; x += 2)
+		{
+			for (int y = x & 1; y < size.y; y += 2)
+			{
+				Tiles[x, y] = TileRegistry.Tiles[0];
+			}
+		}
+		// </Test code>
 	}
 
 	public Tile GetTile(Vector2i position)
 	{
 		if (position < size == 0 && position >= Vector2i.zero == 0)
-			return tiles[position.x, position.y];
+			return Tiles[position.x, position.y];
 		else
 			throw new System.Exception("Tile does not exist: " + position);
 	}
@@ -25,7 +35,7 @@ public class Layer
 	{
 		if (position < size == 0 && position >= Vector2i.zero == 0)
 		{
-			tiles[position.x, position.y] = tile;
+			Tiles[position.x, position.y] = tile;
 			return true;
 		}
 		else
