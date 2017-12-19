@@ -76,6 +76,50 @@ public struct Vector2i
 		return new Vector2i(a.x << b, a.y << b);
 	}
 
+	/// <summary>
+	/// Returns a byte, bit 0 for x, bit 1 for y
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	public static byte operator >(Vector2i a, Vector2i b)
+	{
+		return (byte)((a.x > b.x ? 1 : 0) | (a.y > b.y ? 2 : 0));
+	}
+
+	/// <summary>
+	/// Returns a byte, bit 0 for x, bit 1 for y
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	public static byte operator <(Vector2i a, Vector2i b)
+	{
+		return (byte)((a.x < b.x ? 1 : 0) | (a.y < b.y ? 2 : 0));
+	}
+
+	/// <summary>
+	/// Returns a byte, bit 0 for x, bit 1 for y
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	public static byte operator >=(Vector2i a, Vector2i b)
+	{
+		return (byte)((a.x >= b.x ? 1 : 0) | (a.y >= b.y ? 2 : 0));
+	}
+
+	/// <summary>
+	/// Returns a byte, bit 0 for x, bit 1 for y
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	public static byte operator <=(Vector2i a, Vector2i b)
+	{
+		return (byte)((a.x <= b.x ? 1 : 0) | (a.y <= b.y ? 2 : 0));
+	}
+
 	public static bool operator ==(Vector2i a, Vector2i b)
 	{
 		return a.x == b.x && a.y == b.y;
