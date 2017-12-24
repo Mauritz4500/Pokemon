@@ -11,6 +11,7 @@ public class LayerBehaviour : MonoBehaviour
 	public bool Refresh { get; set; }
 	public BoxCollider boxCollider;
 	public MeshRenderer meshRenderer;
+	public Vector3 position;
 	MeshFilter meshFilter;
 
 	void Start()
@@ -41,6 +42,8 @@ public class LayerBehaviour : MonoBehaviour
 	
 	void Update()
 	{
+		transform.position = position;
+
 		if (Refresh)
 		{
 			Render();

@@ -6,10 +6,7 @@ using UnityEngine;
 public class LayerEditorWindow : EditorWindow
 {
 	public static LayerEditorWindow layerEditorWindow;
-	string myString = "Hello World";
-	bool groupEnabled;
-	bool myBool = true;
-	float myFloat = 1.23f;
+	public string fillExpression = "1";
 	public int selectedLayer = 0;
 	public int selectedTile = 0;
 	Texture tileTextureAtlas;
@@ -41,6 +38,11 @@ public class LayerEditorWindow : EditorWindow
 
 	void OnGUI()
 	{
+		if (GUILayout.Button(new GUIContent("Refresh window")))
+		{
+			Awake();
+		}
+		fillExpression = EditorGUILayout.TextField(new GUIContent("Expression", "Fills a tile at x and y (relative to lower left corner) if the expression evaluates > 0"), fillExpression);
 		for (int i = 0; i < World.world.Layers.Length; i++)
 		{
 			string text;
