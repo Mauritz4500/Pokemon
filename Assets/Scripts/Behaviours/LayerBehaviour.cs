@@ -31,6 +31,9 @@ public class LayerBehaviour : MonoBehaviour
 		meshFilter = GetComponent<MeshFilter>();
 		Layer = new Layer(new Vector2i(100, 100)); //Test code
 		TextureScale = 0.25F; //Test code
+		BoxCollider collider = gameObject.AddComponent<BoxCollider>();
+		collider.center = new Vector3(Layer.Size.x >> 1, Layer.Size.y >> 1, 1); //Half size
+		collider.size = new Vector3(Layer.Size.x, Layer.Size.y, 1);
 		InitalizeMesh();
 		Render();
 	}
@@ -63,10 +66,10 @@ public class LayerBehaviour : MonoBehaviour
 		{
 			for (int y = 0; y < sizeY; y++)
 			{
-				vertices[(x + sizeX * y) * 4] = new Vector3(x, 0, y);
-				vertices[(x + sizeX * y) * 4 + 1] = new Vector3(x + 1, 0, y);
-				vertices[(x + sizeX * y) * 4 + 2] = new Vector3(x, 0, y + 1);
-				vertices[(x + sizeX * y) * 4 + 3] = new Vector3(x + 1, 0, y + 1);
+				vertices[(x + sizeX * y) * 4] = new Vector3(x, y, 0);
+				vertices[(x + sizeX * y) * 4 + 1] = new Vector3(x + 1, y, 0);
+				vertices[(x + sizeX * y) * 4 + 2] = new Vector3(x, y + 1, 0);
+				vertices[(x + sizeX * y) * 4 + 3] = new Vector3(x + 1, y + 1, 0);
 				indices[(x + sizeX * y) * 4] = (x + sizeX * y) * 4;
 				indices[(x + sizeX * y) * 4 + 1] = (x + sizeX * y) * 4 + 2;
 				indices[(x + sizeX * y) * 4 + 2] = (x + sizeX * y) * 4 + 3;

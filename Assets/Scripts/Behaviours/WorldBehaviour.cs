@@ -39,9 +39,4 @@ public class WorldBehaviour : MonoBehaviour
 			}
 		}
 	}
-
-	void Update()
-	{
-
-	}
 }
