@@ -5,10 +5,12 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class LayerBehaviour : MonoBehaviour
 {
-	public Layer Layer { get; set; }
+	public Layer Layer { get; set; } //Maybe do get{World.Layers[index of this layer]} for consistency
 	public World World { get; set; }
 	public WorldBehaviour WorldBehaviour { get; set; }
-	public float TextureScale { get; set; }
+	public bool Refresh { get; set; }
+	public BoxCollider boxCollider;
+	public MeshRenderer meshRenderer;
 	MeshFilter meshFilter;
 
 	void Start()
@@ -29,24 +31,21 @@ public class LayerBehaviour : MonoBehaviour
 			return;
 		}
 		meshFilter = GetComponent<MeshFilter>();
-		Layer = new Layer(new Vector2i(100, 100)); //Test code
-		TextureScale = 0.25F; //Test code
-		BoxCollider collider = gameObject.AddComponent<BoxCollider>();
-		collider.center = new Vector3(Layer.Size.x >> 1, Layer.Size.y >> 1, 1); //Half size
-		collider.size = new Vector3(Layer.Size.x, Layer.Size.y, 1);
+		meshRenderer = GetComponent<MeshRenderer>();
+		boxCollider = gameObject.AddComponent<BoxCollider>();
+		boxCollider.center = new Vector3(Layer.Size.x >> 1, Layer.Size.y >> 1, 1); //Half size
+		boxCollider.size = new Vector3(Layer.Size.x, Layer.Size.y, 1);
 		InitalizeMesh();
 		Render();
 	}
-
-	int i = 0;
+	
 	void Update()
 	{
-		i++; //Test code
-		if (i == 60)
+		if (Refresh)
 		{
 			Render();
-			i = 0;
-		} // /Test code
+			Refresh = false;
+		}
 	}
 
 	void Destroy()
@@ -87,7 +86,7 @@ public class LayerBehaviour : MonoBehaviour
 			meshFilter.mesh = mesh;
 	}
 
-	void Render()
+	public void Render()
 	{
 		int sizeX = Layer.Size.x, sizeY = Layer.Size.y;
 		Vector2[] textureCoordinates = new Vector2[sizeX * sizeY * 4];
@@ -98,11 +97,11 @@ public class LayerBehaviour : MonoBehaviour
 				if (Layer.Tiles[x, y] != null)
 				{
 					Vector2i position = new Vector2i(x, y);
-					Vector2 tileTextureCoordinates = (Vector2)Layer.Tiles[x, y].TextureCoordinates(position, Layer, World) * TextureScale;
+					Vector2 tileTextureCoordinates = (Vector2)Layer.Tiles[x, y].TextureCoordinates(position, World, Layer) * Static.TextureScale;
 					textureCoordinates[(x + sizeX * y) * 4] = tileTextureCoordinates;
-					textureCoordinates[(x + sizeX * y) * 4 + 1] = tileTextureCoordinates + Vector2.right * TextureScale;
-					textureCoordinates[(x + sizeX * y) * 4 + 2] = tileTextureCoordinates + Vector2.up * TextureScale;
-					textureCoordinates[(x + sizeX * y) * 4 + 3] = tileTextureCoordinates + Vector2.one * TextureScale;
+					textureCoordinates[(x + sizeX * y) * 4 + 1] = tileTextureCoordinates + Vector2.right * Static.TextureScale;
+					textureCoordinates[(x + sizeX * y) * 4 + 2] = tileTextureCoordinates + Vector2.up * Static.TextureScale;
+					textureCoordinates[(x + sizeX * y) * 4 + 3] = tileTextureCoordinates + Vector2.one * Static.TextureScale;
 				}
 			}
 		}

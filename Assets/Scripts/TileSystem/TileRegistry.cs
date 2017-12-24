@@ -12,7 +12,8 @@ public static class TileRegistry {
 			Debug.Log("TileRegistry has been initialized already.");
 		else
 			initialized = true;
-		Tiles = new Tile[1];
-		Tiles[0] = new TestTile();
+		Tiles = new Tile[2];
+		Tiles[0] = new TextureTile(0, 0);
+		Tiles[1] = new TextureTile(3, 3);
 	}
 }
