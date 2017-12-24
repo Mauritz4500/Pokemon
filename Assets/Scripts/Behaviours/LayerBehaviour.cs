@@ -7,11 +7,27 @@ public class LayerBehaviour : MonoBehaviour
 {
 	public Layer Layer { get; set; }
 	public World World { get; set; }
+	public WorldBehaviour WorldBehaviour { get; set; }
 	public float TextureScale { get; set; }
 	MeshFilter meshFilter;
 
 	void Start()
 	{
+		bool exists = false;
+		if(WorldBehaviour == null)
+		{
+			Destroy();
+			return;
+		}
+		for (int i = 0; i < WorldBehaviour.layerBehaviours.Length; i++)
+		{
+			exists |= WorldBehaviour.layerBehaviours[i] == this;
+		}
+		if (!exists)
+		{
+			Destroy();
+			return;
+		}
 		meshFilter = GetComponent<MeshFilter>();
 		Layer = new Layer(new Vector2i(100, 100)); //Test code
 		TextureScale = 0.25F; //Test code
@@ -28,6 +44,14 @@ public class LayerBehaviour : MonoBehaviour
 			Render();
 			i = 0;
 		} // /Test code
+	}
+
+	void Destroy()
+	{
+		if (/*Application.isEditor && */!Application.isPlaying)
+			DestroyImmediate(gameObject);
+		else
+			Destroy(gameObject);
 	}
 
 	void InitalizeMesh()
