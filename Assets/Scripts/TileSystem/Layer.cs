@@ -33,7 +33,7 @@ public class Layer
 
 	public bool SetTile(Vector2i position, Tile tile)
 	{
-		if (position < size == 0 && position >= Vector2i.zero == 0)
+		if (position < size == 3 && position >= Vector2i.zero == 3)
 		{
 			Tiles[position.x, position.y] = tile;
 			return true;
