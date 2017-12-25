@@ -8,8 +8,10 @@ public static class TileRegistry {
 
 	public static void Initialize()
 	{
-		if (initialized)
-			Debug.Log("TileRegistry has been initialized already.");
+		if (initialized) {
+			Debug.Log ("TileRegistry has been initialized already.");
+			return;
+		}
 		else
 			initialized = true;
 		Tiles = new Tile[1];

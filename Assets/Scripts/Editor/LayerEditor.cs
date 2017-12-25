@@ -11,7 +11,7 @@ public class LayerEditor : Editor
 		Event e = Event.current;
 		Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(new Vector3(e.mousePosition.x, Screen.height - e.mousePosition.y, 0));
 		RaycastHit hit;
-		if (e.type == EventType.mouseDown)
+		if (e.type == EventType.MouseDown)
 		{
 			if (Physics.Raycast(ray, out hit))
 			{
