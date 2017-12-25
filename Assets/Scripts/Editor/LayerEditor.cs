@@ -18,15 +18,11 @@ public class LayerEditor : Editor
 		LayerBehaviour layerBehaviour = (LayerBehaviour)target;
 		Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(new Vector3(e.mousePosition.x, Screen.height - e.mousePosition.y - 36, 0)); //-36 is GUI offset or so
 		RaycastHit hit;
-<<<<<<< HEAD
-		if (e.type == EventType.MouseDown)
-=======
 		if (e.type == EventType.mouseDown && e.button == 0 && Physics.Raycast(ray, out hit) && hit.transform.gameObject.GetComponent<LayerBehaviour>() == layerBehaviour)
 		{
 			firstPosition = new Vector2i(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y));
 		}
 		else if (e.type == EventType.MouseUp && e.button == 0 && Physics.Raycast(ray, out hit) && hit.transform.gameObject.GetComponent<LayerBehaviour>() == layerBehaviour)
->>>>>>> 01aa49cb3535aa14d38f042f25bdbe96057dc860
 		{
 			Vector2i secondPosition = new Vector2i(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.y));
 			Vector2i start = new Vector2i(Mathf.Min(firstPosition.x, secondPosition.x), Mathf.Min(firstPosition.y, secondPosition.y));
