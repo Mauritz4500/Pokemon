@@ -16,9 +16,9 @@ public static class TileRegistry {
 			initialized = true;
 		TileNames = new string[2];
 		Tiles = new Tile[2];
-		Tiles[0] = new TextureTile(0, 0);
+		Tiles[0] = new TextureTile(0, 0, 0);
 		TileNames[0] = "Test 1 [0, 0]";
-		Tiles[1] = new TextureTile(3, 3);
+		Tiles[1] = new TextureTile(1, 3, 3);
 		TileNames[1] = "Test 2 [3, 3]";
 	}
 

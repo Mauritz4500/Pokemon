@@ -41,4 +41,17 @@ public class Layer
 		else
 			return false;
 	}
+
+	public void Save(string filename)
+	{
+		byte[] data = new byte[size.Square * 2];
+		for (int x = 0; x < size.x; x += 2)
+		{
+			for (int y = x & 1; y < size.y; y += 2)
+			{
+				data[(x + y * size.x) << 1] = (byte) (Tiles[x, y].ID & 0xFF);
+				data[((x + y * size.x) << 1) + 1] = (byte)(Tiles[x, y].ID >> 8 & 0xFF);
+			}
+		}
+	}
 }

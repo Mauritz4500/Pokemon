@@ -36,6 +36,12 @@ public struct Vector2i
 		return new Vector2i(a.x - b.x, a.y - b.y);
 	}
 
+	/// <summary>
+	/// Component-wise multiplication
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
 	public static Vector2i operator *(Vector2i a, Vector2i b)
 	{
 		return new Vector2i(a.x * b.x, a.y * b.y);
@@ -139,6 +145,21 @@ public struct Vector2i
 	{
 		return new Vector2i((int)value.x, (int)value.y);
 	}
+
+	/// <summary>
+	/// Returns the size of a square with the corners [0,0] and [x,y]
+	/// </summary>
+	public int Square { get { return x * y; } }
+
+	/// <summary>
+	/// Returns the length of the vector
+	/// </summary>
+	public float Length { get { return Mathf.Sqrt(x * x + y * y); } }
+
+	/// <summary>
+	/// Returns the square of the length of the vector. Much faster than Length because it doesn't take the square root. Useful for length comparisons.
+	/// </summary>
+	public float LengthSquared { get { return x * x + y * y; } }
 
 	public override string ToString()
 	{

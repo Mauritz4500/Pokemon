@@ -6,9 +6,11 @@ using UnityEngine;
 public class TextureTile : Tile
 {
 	int tX, tY;
+	ushort id;
 
-	public TextureTile(int tX, int tY)
+	public TextureTile(ushort id, int tX, int tY)
 	{
+		this.id = id;
 		this.tX = tX;
 		this.tY = tY;
 	}
@@ -27,4 +29,6 @@ public class TextureTile : Tile
 	{
 		return new Vector2i(tX, tY);
 	}
+
+	public ushort ID { get { return id; } }
 }
