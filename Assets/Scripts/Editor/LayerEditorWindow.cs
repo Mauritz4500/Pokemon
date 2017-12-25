@@ -60,7 +60,7 @@ public class LayerEditorWindow : EditorWindow
 		{
 			string text;
 			if(i == selectedTile)
-				text = "[" + i.ToString() + "]";
+				text = "[" + TileRegistry.TileNames[i] + "]";
 			else
 				text = i.ToString();
 			if(GUILayout.Button(new GUIContent(text, tileTextures[i])))
