@@ -26,6 +26,15 @@ public class WorldBehaviour : MonoBehaviour
 		}
 	}
 
+	public void RefreshAllLayerBehaviours()
+	{
+		for (int i = 0; i < layerBehaviours.Length; i++)
+		{
+			layerBehaviours[i].Refresh = true;
+			layerBehaviours[i].Update();
+		}
+	}
+
 	GameObject[] layerObjects;
 
 	void OnEnable()
@@ -58,7 +67,7 @@ public class WorldBehaviour : MonoBehaviour
 				layerBehaviours[i] = layerObjects[i].GetComponent<LayerBehaviour>();
 				layerBehaviours[i].World = World;
 				layerBehaviours[i].WorldBehaviour = this;
-				layerBehaviours[i].Layer = World.Layers[i];
+				layerBehaviours[i].Index = i;
 				layerObjects[i].GetComponent<MeshRenderer>().material = material;
 			}
 		}

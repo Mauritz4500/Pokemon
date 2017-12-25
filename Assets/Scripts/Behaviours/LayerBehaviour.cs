@@ -5,9 +5,10 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class LayerBehaviour : MonoBehaviour
 {
-	public Layer Layer { get; set; } //Maybe do get{World.Layers[index of this layer]} for consistency
+	public Layer Layer { get { return World.Layers[Index]; } }
 	public World World { get; set; }
 	public WorldBehaviour WorldBehaviour { get; set; }
+	public int Index { get; set; }
 	public bool Refresh { get; set; }
 	public BoxCollider boxCollider;
 	public MeshRenderer meshRenderer;
@@ -40,7 +41,7 @@ public class LayerBehaviour : MonoBehaviour
 		Render();
 	}
 	
-	void Update()
+	public void Update()
 	{
 		transform.position = position;
 

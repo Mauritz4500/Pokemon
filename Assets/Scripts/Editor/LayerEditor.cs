@@ -39,7 +39,7 @@ public class LayerEditor : Editor
 						Debug.Log(WorldBehaviour.worldBehaviour.World.Layers[LayerEditorWindow.layerEditorWindow.selectedLayer].SetTile(new Vector2i(x, y), TileRegistry.Tiles[LayerEditorWindow.layerEditorWindow.selectedTile]));
 				}
 			layerBehaviour.Refresh = true;
-			layerBehaviour.Render();
+			layerBehaviour.Update();
 		}
 	}
 }

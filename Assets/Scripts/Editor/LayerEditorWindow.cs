@@ -6,7 +6,7 @@ using UnityEngine;
 public class LayerEditorWindow : EditorWindow
 {
 	public static LayerEditorWindow layerEditorWindow;
-	public string fillExpression = "1";
+	public string fillExpression = "1", path = "world";
 	public int selectedLayer = 0;
 	public int selectedTile = 0;
 	Texture tileTextureAtlas;
@@ -42,7 +42,17 @@ public class LayerEditorWindow : EditorWindow
 		{
 			Awake();
 		}
-		fillExpression = EditorGUILayout.TextField(new GUIContent("Expression", "Fills a tile at x and y (relative to lower left corner) if the expression evaluates > 0"), fillExpression);
+		path = EditorGUILayout.TextField(new GUIContent("World path", "Path to which the world will be saved to"), path);
+		if (GUILayout.Button(new GUIContent("Load world")))
+		{
+			World.world.Load(path);
+			WorldBehaviour.worldBehaviour.RefreshAllLayerBehaviours();
+		}
+		if (GUILayout.Button(new GUIContent("Save world")))
+		{
+			World.world.Save(path);
+		}
+		fillExpression = EditorGUILayout.TextField(new GUIContent("Expression", "Fills a tile at x and y (relative to lower left corner) if the expression evaluates to > 0"), fillExpression);
 		for (int i = 0; i < World.world.Layers.Length; i++)
 		{
 			string text;

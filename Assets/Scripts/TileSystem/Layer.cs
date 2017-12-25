@@ -13,13 +13,9 @@ public class Layer
 		Tiles = new Tile[size.x, size.y];
 		this.size = size;
 		//<Test code>
-		for (int x = 0; x < size.x; x += 2)
-		{
+		for (int x = 0; x < size.x; x ++)
 			for (int y = x & 1; y < size.y; y += 2)
-			{
 				Tiles[x, y] = TileRegistry.Tiles[0];
-			}
-		}
 		// </Test code>
 	}
 
@@ -29,8 +25,8 @@ public class Layer
 		size.x = data[0] | data[1] << 8 | data[2] << 16 | data[3] << 24;
 		size.y = data[4] | data[5] << 8 | data[6] << 16 | data[7] << 24;
 		Tiles = new Tile[size.x, size.y];
-		for (int x = 0; x < size.x; x += 2)
-			for (int y = x & 1; y < size.y; y += 2)
+		for (int x = 0; x < size.x; x++)
+			for (int y = 0; y < size.y; y++)
 				Tiles[x, y] = TileRegistry.Tiles[data[((x + y * size.x) << 1) + 8] | data[((x + y * size.x) << 1) + 9] << 8];
 	}
 
@@ -64,9 +60,9 @@ public class Layer
 		data[5] = (byte)(size.y >> 8 & 0xFF);
 		data[6] = (byte)(size.y >> 16 & 0xFF);
 		data[7] = (byte)(size.y >> 24 & 0xFF);
-		for (int x = 0; x < size.x; x += 2)
+		for (int x = 0; x < size.x; x++)
 		{
-			for (int y = x & 1; y < size.y; y += 2)
+			for (int y = 0; y < size.y; y++)
 			{
 				data[((x + y * size.x) << 1) + 8] = (byte) (Tiles[x, y].ID & 0xFF);
 				data[((x + y * size.x) << 1) + 9] = (byte)(Tiles[x, y].ID >> 8 & 0xFF);
