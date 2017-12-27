@@ -9,6 +9,8 @@ public class WorldBehaviour : MonoBehaviour
 	public Material material;
 	public World World { get; set; }
 	public LayerBehaviour[] layerBehaviours;
+	public string worldPath;
+	public bool autoloadWorld;
 	private int currentLayer;
 	public int CurrentLayer
 	{
@@ -55,6 +57,7 @@ public class WorldBehaviour : MonoBehaviour
 
 		World = new World(2);
 
+
 		if(layerObjects == null)
 		{
 			layerObjects = new GameObject[World.Layers.Length];
@@ -71,5 +74,7 @@ public class WorldBehaviour : MonoBehaviour
 				layerObjects[i].GetComponent<MeshRenderer>().material = material;
 			}
 		}
+		if (autoloadWorld)
+			World.Load(worldPath);
 	}
 }

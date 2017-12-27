@@ -27,7 +27,10 @@ public class Layer
 		Tiles = new Tile[size.x, size.y];
 		for (int x = 0; x < size.x; x++)
 			for (int y = 0; y < size.y; y++)
-				Tiles[x, y] = TileRegistry.Tiles[data[((x + y * size.x) << 1) + 8] | data[((x + y * size.x) << 1) + 9] << 8];
+				if (data[((x + y * size.x) << 1) + 8] == 0xFF && data[((x + y * size.x) << 1) + 9] == 0xFF)
+					Tiles[x, y] = null;
+				else
+					Tiles[x, y] = TileRegistry.Tiles[data[((x + y * size.x) << 1) + 8] | data[((x + y * size.x) << 1) + 9] << 8];
 	}
 
 	public Tile GetTile(Vector2i position)
@@ -64,8 +67,16 @@ public class Layer
 		{
 			for (int y = 0; y < size.y; y++)
 			{
-				data[((x + y * size.x) << 1) + 8] = (byte) (Tiles[x, y].ID & 0xFF);
-				data[((x + y * size.x) << 1) + 9] = (byte)(Tiles[x, y].ID >> 8 & 0xFF);
+				if(Tiles[x,y] == null)
+				{
+					data[((x + y * size.x) << 1) + 8] = 0xFF;
+					data[((x + y * size.x) << 1) + 9] = 0xFF;
+				}
+				else
+				{
+					data[((x + y * size.x) << 1) + 8] = (byte)(Tiles[x, y].ID & 0xFF);
+					data[((x + y * size.x) << 1) + 9] = (byte)(Tiles[x, y].ID >> 8 & 0xFF);
+				}
 			}
 		}
 		System.IO.File.WriteAllBytes(filename, data);

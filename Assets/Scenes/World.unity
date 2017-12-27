@@ -392,6 +392,8 @@ MonoBehaviour:
   layerBehaviours:
   - {fileID: 0}
   - {fileID: 0}
+  worldPath: world
+  autoloadWorld: 1
 --- !u!4 &1616638819
 Transform:
   m_ObjectHideFlags: 0
